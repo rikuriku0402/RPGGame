@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class StartFade : MonoBehaviour
 {
-    void Start() => Scenemanager.Instance.FadeIn();
+
+    void Start()
+    {
+        Scenemanager.Instance.FadeIn();
+    }
 }
