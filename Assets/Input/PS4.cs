@@ -335,6 +335,66 @@ public class @PS4 : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Event"",
+            ""id"": ""a4f7b764-2f7b-45c3-b9b5-e251d8cd8c7c"",
+            ""actions"": [
+                {
+                    ""name"": ""Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""da8e4e82-960f-4099-a8d0-b6ec05e100b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""cbd5d5e5-51ab-4a23-a477-aeafbb72d7bc"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ae434ca-7645-4502-9e15-8c0b3126b6eb"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b7040b5-3931-4649-8ce7-9d1d00873b12"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03718075-68d4-40b8-ab8c-1b4c3e979b3f"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -350,6 +410,9 @@ public class @PS4 : IInputActionCollection, IDisposable
         m_Player_Clear = m_Player.FindAction("Clear", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SpecialAttack = m_Player.FindAction("SpecialAttack", throwIfNotFound: true);
+        // Event
+        m_Event = asset.FindActionMap("Event", throwIfNotFound: true);
+        m_Event_Next = m_Event.FindAction("Next", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -492,6 +555,39 @@ public class @PS4 : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Event
+    private readonly InputActionMap m_Event;
+    private IEventActions m_EventActionsCallbackInterface;
+    private readonly InputAction m_Event_Next;
+    public struct EventActions
+    {
+        private @PS4 m_Wrapper;
+        public EventActions(@PS4 wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Next => m_Wrapper.m_Event_Next;
+        public InputActionMap Get() { return m_Wrapper.m_Event; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(EventActions set) { return set.Get(); }
+        public void SetCallbacks(IEventActions instance)
+        {
+            if (m_Wrapper.m_EventActionsCallbackInterface != null)
+            {
+                @Next.started -= m_Wrapper.m_EventActionsCallbackInterface.OnNext;
+                @Next.performed -= m_Wrapper.m_EventActionsCallbackInterface.OnNext;
+                @Next.canceled -= m_Wrapper.m_EventActionsCallbackInterface.OnNext;
+            }
+            m_Wrapper.m_EventActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Next.started += instance.OnNext;
+                @Next.performed += instance.OnNext;
+                @Next.canceled += instance.OnNext;
+            }
+        }
+    }
+    public EventActions @Event => new EventActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -503,5 +599,9 @@ public class @PS4 : IInputActionCollection, IDisposable
         void OnClear(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSpecialAttack(InputAction.CallbackContext context);
+    }
+    public interface IEventActions
+    {
+        void OnNext(InputAction.CallbackContext context);
     }
 }

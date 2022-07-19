@@ -322,6 +322,66 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Event",
+            "id": "a4f7b764-2f7b-45c3-b9b5-e251d8cd8c7c",
+            "actions": [
+                {
+                    "name": "Next",
+                    "type": "Button",
+                    "id": "da8e4e82-960f-4099-a8d0-b6ec05e100b6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cbd5d5e5-51ab-4a23-a477-aeafbb72d7bc",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ae434ca-7645-4502-9e15-8c0b3126b6eb",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b7040b5-3931-4649-8ce7-9d1d00873b12",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03718075-68d4-40b8-ab8c-1b4c3e979b3f",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
