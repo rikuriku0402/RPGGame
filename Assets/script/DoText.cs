@@ -28,7 +28,7 @@ public class DoText : MonoBehaviour
     int _count = 0;
 
     const float TIME = 3;
-    public void TalkNext()
+    void Start()
     {
         StartCoroutine(TextMessage());
     }
